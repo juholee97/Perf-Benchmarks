@@ -1,10 +1,9 @@
-// lamda, std::function performance test
+// assign, std::swap performance test
 #include <iostream>
 #include <functional>
 #include <algorithm>
 #include <chrono>
 #include <fstream>
-#include <vector>
 
 
 class CBigdata
