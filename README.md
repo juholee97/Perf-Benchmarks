@@ -2,8 +2,9 @@
 
 # 기능이 유사한 동작에 대한 퍼포먼스를 벤치를 통해 확인 & 정리하고자 생성된 Repo.
 
-## TEST 01. 함수 호출 횟수에 따른 lamda 와 std::function 성능 비교. ( https://github.com/juholee97/Perf-Benchmarks/tree/main/Perf-Bench_lamda_func )
+## TEST 01. 함수 호출 횟수에 따른 lamda 와 std::function 성능 비교. 
 
+https://zero-point-five-developer.tistory.com/22
 
 std::function 이 TypeErasure 패턴 기반이기에 느리다는 점은 알고 있었으나 
 실제로 lamda 호출에 비해 얼마나 차이나는지 체크하고 비교하고자 함.
@@ -28,6 +29,7 @@ f_stdFunc를 통한 함수 1회 호출 시 평균 소요 시간 : 약 0.00002820
 
 ## TEST 02. Class 초기화 관점에서 std::swap을 사용했을 때, assign 과 성능 비교. ( https://github.com/juholee97/Perf-Benchmarks/tree/main/Perf-Bench_assign_swap )
 
+https://zero-point-five-developer.tistory.com/23
 
 std::swap 은 assign과 비교했을 때, 어느 정도 성능 상의 차이가 발생하는지 1~10만 번의 반복 호출을 통해 평균 소요 시간을 측정.
 
