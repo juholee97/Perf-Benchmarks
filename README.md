@@ -60,7 +60,7 @@ assign의 경우, 일반적으로 동작이 간단하며, 작은 클래스일수
 다만 추가적으로 생각해볼 내용으로, class의 size가 매우 큰 경우 일일히 assign으로 초기화 하는것이 빠를지, class 생성 후 std::swap을 통해 초기화 시키는 것이 좋을지는 고려해볼만 하다고 생각함.
 
 
-## TEST 03. 멀티스레드 환경에서 cache line에 대한 aligned 처리 유무에 따른 성능 비교. ( https://github.com/juholee97/Perf-Benchmarks/tree/main/PerfBench_aligned_cache_line
+## TEST 03. 멀티스레드 환경에서 cache line에 대한 aligned 처리 유무에 따른 성능 비교. ( https://github.com/juholee97/Perf-Benchmarks/tree/main/Perf-Bench_aligned_cache_line )
 
 멀티스레드 컴퓨터 시스템 환경에서 메모리 접근 성능을 최적화하기 위해 데이터를 캐시 라인 크기에 맞춰 정렬시켰을 때, 정렬시키지 않은 경우와 어느 정도의 성능 차이를 보이는지 소요 시간을 측정.
 
