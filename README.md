@@ -23,7 +23,7 @@ f_stdFunc를 통한 함수 1회 호출 시 평균 소요 시간 : 약 0.00002820
 호출 횟수가 커질수록 std::function의 성능이 lamda의 성능에 비해 매우 좋지 않음을 확인할 수 있었음. (테스트 상 약 14배)
 
 
-
+------
 
 
 
@@ -45,6 +45,7 @@ assign을 통한 초기화 1회 호출 시 평균 소요시간 :	약 0.000035536
 
 std::swap을 통한 초기화 1회 호출 시 평균 소요시간 : 약 0.000094656ms
 
+
 class에 대해 초기화를 진행했을 때 std::swap이 assign과 비교했을 때 약 2.7 배의 속도 차이를 보임.
 
 이는 std::swap이 두 객체의 값을 교환하기 위해 세 번의 이동 혹은 복사연산을 수행하기 때문에, 일정 수준 이상의 연산 비용을 초래함.
@@ -60,6 +61,10 @@ assign의 경우, 일반적으로 동작이 간단하며, 작은 클래스일수
 다만 추가적으로 생각해볼 내용으로, class의 size가 매우 큰 경우 일일히 assign으로 초기화 하는것이 빠를지, class 생성 후 std::swap을 통해 초기화 시키는 것이 좋을지는 고려해볼만 하다고 생각함.
 
 
+------
+
+
+
 ## TEST 03. 멀티스레드 환경에서 cache line에 대한 aligned 처리 유무에 따른 성능 비교. ( https://github.com/juholee97/Perf-Benchmarks/tree/main/Perf-Bench_aligned_cache_line )
 
 멀티스레드 컴퓨터 시스템 환경에서 메모리 접근 성능을 최적화하기 위해 데이터를 캐시 라인 크기에 맞춰 정렬시켰을 때, 정렬시키지 않은 경우와 어느 정도의 성능 차이를 보이는지 소요 시간을 측정.
@@ -72,7 +77,9 @@ assign의 경우, 일반적으로 동작이 간단하며, 작은 클래스일수
 ![image](https://github.com/user-attachments/assets/dbee0f43-a6c5-453a-9670-bdff52338668)
 
 cache line aligned 상태의 멀티 스레드 평균 소요 시간 : 0.004818528	sec
+
 non-cache line aligned 상태의 멀티 스레드 평균 소요 시간 : 0.051430245 sec
+
 
 cache line aligned 상태의 멀티 스레드는 non-aligned 상태의 멀티 스레드와 비교했을 때, 10.67배의 성능 차이를 보임.
 
