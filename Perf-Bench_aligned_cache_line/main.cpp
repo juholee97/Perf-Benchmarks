@@ -11,32 +11,32 @@ std::ofstream outputFile( "compare_performance.csv" );
 const int NUM_THREADS = 4;
 const int NUM_INCREMENTS = 1000000;
 
-struct PaddedAtomic {
+struct AlignedAtomic {
 	alignas( std::hardware_destructive_interference_size ) std::atomic<int> value;
 };
 
-struct NonPaddedAtomic {
+struct NonAlignedAtomic {
 	std::atomic<int> value;
 };
 
-PaddedAtomic paddedCounters[ NUM_THREADS ];
-NonPaddedAtomic nonPaddedCounters[ NUM_THREADS ];
+AlignedAtomic alignedCounters[ NUM_THREADS ];
+NonAlignedAtomic nonAlignedCounters[ NUM_THREADS ];
 
 void incrementPadded( int index ) {
 	for ( int i = 0; i < NUM_INCREMENTS; ++i ) {
-		paddedCounters[ index ].value.fetch_add( 1, std::memory_order_relaxed );
+		alignedCounters[ index ].value.fetch_add( 1, std::memory_order_relaxed );
 	}
 }
 
 void incrementNonPadded( int index ) {
 	for ( int i = 0; i < NUM_INCREMENTS; ++i ) {
-		nonPaddedCounters[ index ].value.fetch_add( 1, std::memory_order_relaxed );
+		nonAlignedCounters[ index ].value.fetch_add( 1, std::memory_order_relaxed );
 	}
 }
 
 void measureAndOutputPerformance() {
 
-	// Measure performance with padding
+	// Measure performance with alignas
 	{
 		std::vector<std::thread> threads;
 		auto start = std::chrono::high_resolution_clock::now();
@@ -52,15 +52,10 @@ void measureAndOutputPerformance() {
 		auto end = std::chrono::high_resolution_clock::now();
 		std::chrono::duration<double> duration = end - start;
 
-		int total = 0;
-		for ( int i = 0; i < NUM_THREADS; ++i ) {
-			total += paddedCounters[ i ].value.load();
-		}
-
 		outputFile << duration.count() << ",";
 	}
 
-	// Measure performance without padding
+	// Measure performance without alignas
 	{
 		std::vector<std::thread> threads;
 		auto start = std::chrono::high_resolution_clock::now();
@@ -75,11 +70,6 @@ void measureAndOutputPerformance() {
 
 		auto end = std::chrono::high_resolution_clock::now();
 		std::chrono::duration<double> duration = end - start;
-
-		int total = 0;
-		for ( int i = 0; i < NUM_THREADS; ++i ) {
-			total += nonPaddedCounters[ i ].value.load();
-		}
 
 		outputFile << duration.count() << "\n";
 	}
